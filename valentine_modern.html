@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saint-Valentin ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --accent: #ff2e63;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        #yesBtn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: 2px solid #ff1493;
+        }
+
+        #noBtn {
+            background: white;
+            color: #ff1493;
+            border: 2px solid #ff69b4;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .emoji {
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+        }
+
+        .emoji:hover {
+            transform: scale(1.3);
+            filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.6));
+        }
+
+        .btn .emoji {
+            font-size: 1.3em;
+            vertical-align: middle;
+        }
+
+        .celebration {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="question">
+        <h1>MAROUA</h1><br>
+        <h1>Will u be My Valentine ? 💞</h1>
+        <div class="buttons">
+            <button class="btn" id="yesBtn">YES <span class="emoji">💖</button>
+            <button class="btn" id="noBtn">NO <span class="emoji"></span></button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="answer">
+        <h1 class="celebration">YESSSS 💖 <span class="emoji">🎉</span></h1>
+        <h2 style="margin: 1.5rem 0; color: var(--accent);">Best decision ever ! <span class="emoji">💕</span></h2>
+        <p style="font-size: 1.5rem; margin-top: 1rem;">Love uuu ! <span class="emoji">💓</span></p>
+        <div style="margin-top: 2rem;">
+            <span class="emoji" style="font-size: 2rem; margin: 0 5px;">💞</span>
+            <span class="emoji" style="font-size: 2rem; margin: 0 5px;">💗</span>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionDiv = document.getElementById('question');
+        const answerDiv = document.getElementById('answer');
+
+        // Effet de survol du bouton NO - déplacement limité au conteneur
+        noBtn.addEventListener('mouseover', (e) => {
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noBtn.getBoundingClientRect();
+            
+            // Définit les limites du conteneur
+            const minX = containerRect.left + 20;
+            const maxX = containerRect.right - buttonRect.width - 20;
+            const minY = containerRect.top + 20;
+            const maxY = containerRect.bottom - buttonRect.height - 20;
+            
+            // Calcule la nouvelle position aléatoire dans les limites du conteneur
+            const newX = minX + Math.random() * (maxX - minX);
+            const newY = minY + Math.random() * (maxY - minY);
+            
+            // Applique la nouvelle position
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            
+            // Ajoute une rotation minimale
+            noBtn.style.transform = `rotate(${Math.random() * 8 - 4}deg)`;
+        });
+
+        // Clic sur le bouton OUI
+        yesBtn.addEventListener('click', () => {
+            // Masquer complètement la question et les boutons
+            questionDiv.style.display = 'none';
+            // Afficher la réponse
+            answerDiv.classList.remove('hidden');
+            answerDiv.style.display = 'block';
+            
+            // Animation de cœurs
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    const emojis = ['💖', '💕', '💓', '💗', '💘', '💝', '💞', '💟', '💌', '💑', '💏', '💒'];
+            heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    heart.style.position = 'fixed';
+                    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    heart.style.animation = 'float 3s ease-out forwards';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100vh';
+                    heart.style.opacity = '0.8';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 300);
+            }
+        });
+
+        // Support tactile pour mobile - même comportement que le survol
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noBtn.getBoundingClientRect();
+            
+            // Définit les limites du conteneur
+            const minX = containerRect.left + 20;
+            const maxX = containerRect.right - buttonRect.width - 20;
+            const minY = containerRect.top + 20;
+            const maxY = containerRect.bottom - buttonRect.height - 20;
+            
+            // Calcule la nouvelle position aléatoire dans les limites du conteneur
+            const newX = minX + Math.random() * (maxX - minX);
+            const newY = minY + Math.random() * (maxY - minY);
+            
+            // Applique la nouvelle position
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            noBtn.style.transform = `rotate(${Math.random() * 8 - 4}deg)`;
+        });
+    </script>
+</body>
+</html>
